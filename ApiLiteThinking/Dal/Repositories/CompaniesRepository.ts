@@ -48,6 +48,11 @@ class CompaniesRepository {
 
         return createdItem;
     }
+
+    async updateCompany(item) {
+        const container = await this.companiesContainerProvider.provide();
+        await container.item(item.id).replace(item);
+    }
 }
 
 export default CompaniesRepository;

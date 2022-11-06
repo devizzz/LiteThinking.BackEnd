@@ -24,6 +24,7 @@ export class Companies {
         this.id = props.id;
         this.NIT = props.NIT;
         this.name = props.name;
+        this.address = props.address;
         this.phone = props.phone;
         this.created_at = props.created_at;
         this.products = props.products;
@@ -42,13 +43,13 @@ export class Companies {
         if (typeof (this.name) != "string" || !this.name)
             throw new ValueError("name should be not empty string");
 
+        if (typeof (this.address) != "string" || !this.name)
+            throw new ValueError("address should be not empty string");
+
         if (typeof (this.phone) != "string" || !this.phone)
             throw new ValueError("phone should be not empty string");
 
         if (typeof (this.created_at) != "string" || isNaN(createdDateFromString.getTime()))
             throw new ValueError("created_at should be a valid datetime format");
-
-        if (typeof (this.products) != "object" || !this.products)
-            throw new ValueError("products should be not empty or null");
     }
 }

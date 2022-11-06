@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@azure/cosmos": "^3.17.1",
+    "@sendgrid/mail": "^7.7.0",
     "awilix": "^8.0.0",
     "dotenv": "^16.0.3"
   },

@@ -22,8 +22,10 @@ class LiteThinkingController {
                 return await this.getCompanies();
             case "POST":
                 return await this.saveCompany(req);
+            case "PUT":
+                return await this.updateCompany(req);
             default:
-                return ControllerResponse.notFound({error: `${req.method} method not supported`});
+                return ControllerResponse.notFound({ error: `${req.method} method not supported` });
         }
     }
 
@@ -31,24 +33,38 @@ class LiteThinkingController {
         try {
             const response = await this.liteThinkingService.getCompanies();
             return ControllerResponse.success(response);
-        } catch(error) {
-            if(error instanceof ValueError){
+        } catch (error) {
+            if (error instanceof ValueError) {
                 return ControllerResponse.badRequest({ error: error.message || "Bad Request" });
             }
-            return ControllerResponse.serverError({ error: error.message || "Server Error"});
+            return ControllerResponse.serverError({ error: error.message || "Server Error" });
         }
     }
 
     private async saveCompany(req: HttpRequest): Promise<ControllerResponse> {
         try {
             const companyDto = new CompaniesDto(req.body);
+            companyDto.created_at = new Date().toString();
             const response = await this.liteThinkingService.saveCompany(companyDto);
             return ControllerResponse.success(response);
-        } catch(error){
-            if(error instanceof ValueError){
+        } catch (error) {
+            if (error instanceof ValueError) {
                 return ControllerResponse.badRequest({ error: error.message || "Bad Request" });
             }
-            return ControllerResponse.serverError({ error: error.message || "Error interno"});
+            return ControllerResponse.serverError({ error: error.message || "Error interno" });
+        }
+    }
+
+    private async updateCompany(req: HttpRequest): Promise<ControllerResponse> {
+        try {
+            const companyDto = new CompaniesDto(req.body);
+            await this.liteThinkingService.updateCompany(companyDto);
+            return ControllerResponse.success();
+        } catch (error) {
+            if (error instanceof ValueError) {
+                return ControllerResponse.badRequest({ error: error.message || "Bad Request" });
+            }
+            return ControllerResponse.serverError({ error: error.message || "Error interno" });
         }
     }
 }

@@ -21,6 +21,7 @@ export class CompaniesDto {
         this.id = props.id;
         this.NIT = props.NIT;
         this.name = props.name;
+        this.address = props.address;
         this.phone = props.phone;
         this.created_at = props.created_at;
         this.products = props.products;

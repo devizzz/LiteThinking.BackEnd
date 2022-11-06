@@ -23,6 +23,11 @@ class LiteThinkingService {
     return this.companiesMapper.entityToDto(createdItem);
   }
 
+  public async updateCompany(companyDto: CompaniesDto): Promise<void> {
+    const company = this.companiesMapper.dtoToEntity(companyDto);
+    await this.companiesRepository.updateCompany(company);
+  }
+
   public async getCompanies(): Promise<CompaniesDto[]> {
     const items = await this.companiesRepository.getCompanies();
     const companiesDto = items.map(x => this.companiesMapper.entityToDto(new Companies(x, false)));
