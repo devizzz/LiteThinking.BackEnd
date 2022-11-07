@@ -23,6 +23,10 @@ func host start
 
 ## Endpoint to test 
 ```
+POST
+https://litethinkingapi.azurewebsites.net/api/ApiSendEmail?email=:email
+```
+```
 https://litethinkingapi.azurewebsites.net/api/ApiLiteThinking
 ```
 ```JSON
