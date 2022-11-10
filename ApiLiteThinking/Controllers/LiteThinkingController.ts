@@ -24,6 +24,8 @@ class LiteThinkingController {
                 return await this.saveCompany(req);
             case "PUT":
                 return await this.updateCompany(req);
+            case "DELETE":
+                return await this.deleteCompany(req);
             default:
                 return ControllerResponse.notFound({ error: `${req.method} method not supported` });
         }
@@ -60,6 +62,24 @@ class LiteThinkingController {
             const companyDto = new CompaniesDto(req.body);
             await this.liteThinkingService.updateCompany(companyDto);
             return ControllerResponse.success();
+        } catch (error) {
+            if (error instanceof ValueError) {
+                return ControllerResponse.badRequest({ error: error.message || "Bad Request" });
+            }
+            return ControllerResponse.serverError({ error: error.message || "Error interno" });
+        }
+    }
+
+    private async deleteCompany(req: HttpRequest): Promise<ControllerResponse> {
+        try {
+            const { id, partitionKey } = req.query;
+            if(id && partitionKey){
+                await this.liteThinkingService.deleteCompany(id, partitionKey);
+                return ControllerResponse.success();
+            }
+            else {
+                return ControllerResponse.notFound();
+            }
         } catch (error) {
             if (error instanceof ValueError) {
                 return ControllerResponse.badRequest({ error: error.message || "Bad Request" });

@@ -33,6 +33,10 @@ class LiteThinkingService {
     const companiesDto = items.map(x => this.companiesMapper.entityToDto(new Companies(x, false)));
     return companiesDto;
   }
+
+  public async deleteCompany(id: string, partitionKey: string): Promise<void> {
+    await this.companiesRepository.deleteCompany(id, partitionKey);
+  }
 }
 
 export default LiteThinkingService;

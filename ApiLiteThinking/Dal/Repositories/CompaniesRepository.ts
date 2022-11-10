@@ -53,6 +53,11 @@ class CompaniesRepository {
         const container = await this.companiesContainerProvider.provide();
         await container.item(item.id).replace(item);
     }
+
+    async deleteCompany(id, partitionKey) {
+        const container = await this.companiesContainerProvider.provide();
+        await container.item(id, partitionKey).delete();
+    }
 }
 
 export default CompaniesRepository;
